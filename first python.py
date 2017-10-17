@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import math
+
 '''
 适用于首选是网络应用，包括网站、后台服务等等；
 其次是许多日常需要的小工具，包括系统管理员需要的脚本任务等等；
@@ -117,7 +118,7 @@ else:
 # if int(birth) > 1992:
 #     print('超过了年线%s' % (birth))
 
-    # 循环
+# 循环
 
 names = ['Michael', 'Bob', 'Tracy']
 
@@ -166,27 +167,28 @@ print('16进制的%s' % (hex(254)))
 def 绝对值(x):
     if x > 20:
         return x
- #pass语句什么都不做，那有什么用？实际上pass可以用来作为占位符，比如现在还没想好怎么写函数的代码，就可以先放一个pass，让代码能运行起来。
-def 数值(d):
+        # pass语句什么都不做，那有什么用？实际上pass可以用来作为占位符，比如现在还没想好怎么写函数的代码，就可以先放一个pass，让代码能运行起来。
 
+
+def 数值(d):
     pass
+
 
 def move(x, y, step, angle=0):
     nx = x + step * math.cos(angle)
     ny = y - step * math.sin(angle)
     return nx, ny
 
-x, y = move(10,20,30, math.pi / 6)
+
+x, y = move(10, 20, 30, math.pi / 6)
+
 
 def quadratic(a, b, c):
-
     if not isinstance(a, (int, float)) or not isinstance(b, (int, float)) or not isinstance(c, (int, float)):
-
         raise TypeError('bad operand type')
 
 
-def test(x = None):
-
+def test(x=None):
     x = []
     x.append('END')
 
@@ -208,22 +210,133 @@ def calc(*numbers):
     return sum
 
 
-
-
 def person(name, age, **kw):
-
     print('name:', name, 'age:', age, 'other:', kw)
 
 
-person('json',18)
+person('json', 18)
 
-person('bob',35,name='jar')
+person('bob', 35, jab='jar')
 
-#如果要限制关键字参数的名字，就可以用命名关键字参数，例如，只接收city和job作为关键字参数。这种方式定义的函数如下：
+
+# 如果要限制关键字参数的名字，就可以用命名关键字参数，例如，只接收city和job作为关键字参数。这种方式定义的函数如下：
+
 def person1(name, age, *, city, job):
     print(name, age, city, job)
 
-person1('card',18,city='xini',job='java')
-person1('card',18,name='xini',jobs='java')
+
+person1('card', 18, city='xini', job='java')
+person1('card', 18, city='xini', job='java')
 
 power(4)
+
+
+def person(name, age, *args, city, job):
+    print('iab', 18, (18, 'gb'), city='xoni', job='java')
+
+
+def person2(a, b, *args, **kw):
+    print(a, b, args, kw)
+
+
+person2(3, 4)
+
+person2(4, 36, 4, "adb", kw="c")
+
+
+def digui(x):
+    if x > 1:
+        return 1
+    else:
+        return x * digui(x - 1)
+
+    digui(5)
+
+
+from collections import Iterable
+
+isinstance('abc', Iterable)
+
+l = list(range(1, 11))
+print(l)
+
+s = [x * x for x in range(1, 11)]
+
+s2 = [x * x for x in range(1, 11) if x % 2 == 0]
+
+g = (x * x for x in range(1, 11))
+
+g1 = (5, 'c', 'b')
+next(g)
+
+
+
+
+def odd():
+    print('step 1')
+    yield 1
+    print('step 2')
+    yield (3)
+    print('step 3')
+    yield (5)
+
+
+o = odd()
+next(o)
+next(o)
+next(o)
+#迭代器 yield是迭代器的标志
+def fib(max):
+    print ('这是一个n')
+
+    n, a, b = 0, 0, 1
+    print ('这是一个n1')
+
+    while n < max:
+        print('这是一个%d' % n)
+        yield b
+        print('这是一个%d' % n)
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
+
+
+
+o = fib(3)
+print(next(o))
+print(next(o))
+
+print(next(o))
+
+
+
+
+
+def gener(raw):
+    n,a=1,[1]
+    while n<=raw:
+        yield(a)
+        b = a[:]
+        for i in range(n-1):
+            a[i+1] = b[i]+b[i+1]
+        n+=1
+        a.append(1)
+
+for num in gener(10):
+    print(num)
+
+
+ #map映射函数
+
+def map(x):
+    return  x*x
+
+map(map,[1,4,8])
+
+#个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，
+
+from functools import reduce
+def add(x, y):
+    return x + y
+
+reduce(add, [1, 3, 5, 7, 9])

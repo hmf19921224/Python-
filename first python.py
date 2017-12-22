@@ -1,7 +1,6 @@
 # coding=utf-8
 
 import math
-
 '''
 适用于首选是网络应用，包括网站、后台服务等等；
 其次是许多日常需要的小工具，包括系统管理员需要的脚本任务等等；
@@ -52,12 +51,11 @@ print(ord('文'))
 print(ord('\u4e2d'))
 
 x = b'ABC'
-print(x)
+print('x is %s' % x)
 
 # len()计算的是字符串包含的字符数量。而字符串转变成byte后。len计算的是字符串所占用的字节数量
 x = len('中文'.encode('utf-8'))
 print(x)
-
 x = len('中文')
 print(x)
 '''
@@ -69,6 +67,8 @@ print(x)
 'Hi, %s, you have $%d.' % ('Michael', 1000000)
 
 '%2d-%02d' % (3, 1)
+
+print ('Hi,%.1f' % 9.99)
 
 s1 = 72
 s3 = 85
@@ -169,7 +169,9 @@ def 绝对值(x):
         return x
         # pass语句什么都不做，那有什么用？实际上pass可以用来作为占位符，比如现在还没想好怎么写函数的代码，就可以先放一个pass，让代码能运行起来。
 
+defs = 绝对值
 
+defs(5)
 def 数值(d):
     pass
 
@@ -193,6 +195,12 @@ def test(x=None):
     x.append('END')
 
     test()
+
+def pip(conet ,host ):
+
+    x = 5
+    print('x = %d' %x)
+    return  x
 
 
 def power(x, n=2):
@@ -270,8 +278,6 @@ g1 = (5, 'c', 'b')
 next(g)
 
 
-
-
 def odd():
     print('step 1')
     yield 1
@@ -285,12 +291,14 @@ o = odd()
 next(o)
 next(o)
 next(o)
-#迭代器 yield是迭代器的标志
+
+
+# 迭代器 yield是迭代器的标志
 def fib(max):
-    print ('这是一个n')
+    print('这是一个n')
 
     n, a, b = 0, 0, 1
-    print ('这是一个n1')
+    print('这是一个n1')
 
     while n < max:
         print('这是一个%d' % n)
@@ -301,7 +309,6 @@ def fib(max):
     return 'done'
 
 
-
 o = fib(3)
 print(next(o))
 print(next(o))
@@ -309,34 +316,156 @@ print(next(o))
 print(next(o))
 
 
-
-
-
 def gener(raw):
-    n,a=1,[1]
-    while n<=raw:
-        yield(a)
+    n, a = 1, [1]
+    while n <= raw:
+        yield (a)
         b = a[:]
-        for i in range(n-1):
-            a[i+1] = b[i]+b[i+1]
-        n+=1
+        for i in range(n - 1):
+            a[i + 1] = b[i] + b[i + 1]
+        n += 1
         a.append(1)
+
 
 for num in gener(10):
     print(num)
 
 
- #map映射函数
+    # map映射函数
 
-def map(x):
-    return  x*x
 
-map(map,[1,4,8])
+def maps(x):
+    return x * x
 
-#个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，
+
+map(maps, [1, 4, 8])
+
+# 个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，
 
 from functools import reduce
+
+
 def add(x, y):
     return x + y
 
+
 reduce(add, [1, 3, 5, 7, 9])
+
+# key指定的函数将作用于list的每一个元素上，并根据key函数返回的结果进行排序。对比原始的list和经过key=abs处理过的list：
+
+
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+
+
+def sortss(*t):
+
+    return t[0]
+
+
+l2 =sorted(L, key=sortss)
+
+for tumple in l2:
+
+    print(tumple)
+#函数作为返回值
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+
+le = lazy_sum((1,3,5,6))
+
+#函数对象有一个__name__属性，可以拿到函数的名字：
+
+lazy_sum().__name__
+
+def log(func):
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+
+log(lazy_sum)(45)
+
+
+
+
+#装饰器
+
+
+def logs(func):
+
+    def wrapper(*args,**kw):
+        print('call begain')
+        func(*args,**kw)
+        print('call end')
+    return  wrapper
+
+@logs
+def now():
+       print('2015-3-25')
+now()
+
+#int()函数可以把字符串转换为整数，当仅传入字符串时，int()函数默认按十进制转换：
+
+int('12345', base=8)
+
+class student(object):
+
+    def __init__(self,name, idd):
+        self.name = name
+        #在变量之前加_外部访问不到
+        # 但是如果外部代码要获取name和score怎么办？可以给Student类增加get_name和get_score这样的方法：
+        self.__id = idd
+
+    def get__id( self ):
+
+         return self.__id
+
+
+let = student('jack',200)
+
+let.name
+
+
+
+#python的类属性和实例属性不一致。
+
+class test(object):
+
+
+    id = 'kae'
+    def __init__(self,name):
+        self.name = name
+
+
+tes = test('kake')
+tes.id
+
+
+def set_age(self,age):
+    self.name = age
+
+#python动态语言。可以给类绑定一个方法
+from types import MethodType
+tes.set_age = MethodType(set_age, 's') # 给实例绑定一个方法
+
+
+class Students(object):
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+
+

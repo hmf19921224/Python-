@@ -1,0 +1,159 @@
+import pymysql
+
+def creat_table():
+
+    db = pymysql.connect(host='localhost', user='root', password='root',db='python')
+# 创建数据库实例
+
+
+    sql = '''create table if not exists developer (
+   id int NOT NULL AUTO_INCREMENT, 
+   name text,
+   job text,
+   site text,
+   PRIMARY KEY (`id`)
+   )'''
+    # 创建表结构
+
+    cursor = db.cursor()
+    # 使用 cursor() 方法创建一个对象 cursor
+
+    try:
+        cursor.execute(sql)
+#执行sql语句
+        db.commit()
+    #提交事物
+    except BaseException as e:
+        db.rollback()
+        print(e)
+    finally:
+        cursor.close()
+        db.close()
+
+def query_table():
+    db = pymysql.connect(host ='localhost',user='root',password='root',db='python')
+    sql = 'select * from developer'
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        print('查询到一条数据id =%s,name =%s,job=%s,site=%s'%(result[0],result[1],result[2],result[3]))
+        '''
+        如果先用fetchone()，游标是从1开始
+        如果游标位置，偏移量：大于0向后移动，小于0向前移动
+        relative：表示从当前所在的行开始移动；absolute:表示从第一行开始移动
+        '''
+        cursor.scroll(0,mode='absolute')
+        results = cursor.fetchall()
+        for row in results:
+            print('查询多条数据id =%s,name =%s,job=%s,site=%s' % (row[0], row[1], row[2], row[3]))
+    except BaseException as e:
+        print(e)
+    finally:
+        cursor.close()
+        db.close()
+
+def update_table():
+    # 建立连接
+    db = pymysql.connect(host='localhost',
+                         user='root',
+                         password='root',
+                         db='python3learn')
+    # 更新数据
+    sql = 'update developer set name=%s where id=%s'
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+    try:
+        value = ('WuXia3dfdf3olong', 1)
+        # 执行 sql 语句
+        cursor.execute(sql, value)
+        # 提交事务
+        db.commit()
+        print('update table success')
+        return True
+
+    except BaseException as e:
+        # 如果发生错误则回滚
+        db.rollback()
+        print(e)
+
+    finally:
+        # 关闭游标连接
+        cursor.close()
+        # 关闭数据库连接
+        db.close()
+
+def delete_table():
+    # 建立连接
+    db = pymysql.connect(host='localhost',
+                         user='root',
+                         password='root',
+                         db='python3learn')
+    # 更新数据
+    sql = 'delete from developer where id=%s'
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+    try:
+        value = (8,)
+        # 执行sql语句
+        cursor.execute(sql, value)
+        # 提交事务
+        db.commit()
+        print('delete table success')
+        return True
+
+    except BaseException as e:
+        # 如果发生错误则回滚
+        db.rollback()
+        print(e)
+
+    finally:
+        # 关闭游标连接
+        cursor.close()
+        # 关闭数据库连接
+        db.close()
+
+def insert_table():
+    # 建立连接
+    db = pymysql.connect(host='localhost',
+                         user='root',
+                         password='root',
+                         db='python3learn')
+    # 插入数据
+    sql = 'insert into developer (name,job,site) values (%s, %s, %s)'
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+    try:
+        value = ('wxl', 'Python', 'http://wuxiaolong.me/')
+        # 执行 sql 语句
+        cursor.execute(sql, value)
+        # 提交事务
+        db.commit()
+        print('insert table success')
+        return True
+
+    except BaseException as e:
+        # 如果发生错误则回滚
+        db.rollback()
+        print(e)
+
+    finally:
+        # 关闭游标连接
+        cursor.close()
+        # 关闭数据库连接
+        db.close()
+
+
+def funA(func):
+    def wrapper():
+        print('%s' % func.__name__)
+        return func()
+
+    return wrapper()
+
+@funA
+def funB():
+
+    print('打印一句话')
+
+funB
